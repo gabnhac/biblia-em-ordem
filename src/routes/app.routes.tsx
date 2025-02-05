@@ -7,6 +7,9 @@ import Relatorio from "@screens/Relatorio";
 import Turmas from "@screens/Turmas";
 import { Platform } from "react-native";
 
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Entypo from '@expo/vector-icons/Entypo';
+
 type AppRoutes = {
     feed: undefined,
     formulario: undefined,
@@ -25,31 +28,69 @@ export function AppRoutes(){
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
-                tabBarActiveTintColor: theme.COLORS.PRINCETON_ORANGE,
-                tabBarInactiveTintColor: theme.COLORS.PRUSSIAN_BLUE,
                 tabBarStyle:{
                     backgroundColor: theme.COLORS.FRENCH_GRAY,
                     height: Platform.OS === 'android' ? 70 : 96,
-                    
-                }
+                    elevation: 0,
+                    borderTopWidth: 0,
+                },
+                
+                
             }}
         >
             <Screen
                 name="feed"
                 component={Feed}
-                
+                options={{
+                    tabBarIcon: ({focused}) => {
+                        let color = focused ? theme.COLORS.PRINCETON_ORANGE : theme.COLORS.PRUSSIAN_BLUE;
+                        return (
+                            <Entypo name="home" size={30} color={color} />
+
+                        )
+                    }
+                    
+                }}
             />
             <Screen
                 name="turmas"
                 component={Turmas}
+                options={{
+                    tabBarIcon: ({focused}) => {
+                        let color = focused ? theme.COLORS.PRINCETON_ORANGE : theme.COLORS.PRUSSIAN_BLUE;
+                        return (
+                            <MaterialIcons name="description" size={30} color={color} />
+                        )
+                    }
+                }}
             />
             <Screen
                 name="formulario"
                 component={Formulario}
+                options={{
+                    tabBarIcon: ({focused}) => {
+                        let color = focused ? theme.COLORS.PRINCETON_ORANGE : theme.COLORS.PRUSSIAN_BLUE;
+                        return(
+                            <Entypo name="clipboard" size={30} color={color} />
+
+                        )
+                    }
+                    
+                }}
             />
             <Screen
                 name="relatorio"
                 component={Relatorio}
+                options={{
+                    tabBarIcon: ({focused}) => {
+                        let color = focused ? theme.COLORS.PRINCETON_ORANGE : theme.COLORS.PRUSSIAN_BLUE;
+                        return (
+                            <MaterialIcons name="description" size={30} color={color} />
+
+                        )
+                    } 
+                    
+                }}
             />
         </Navigator>
     )

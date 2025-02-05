@@ -3,12 +3,13 @@ export default {
         FRENCH_GRAY: '#B9C1C7',
         PRUSSIAN_BLUE: '#102A41',
         PRINCETON_ORANGE: '#F7900B',
-        PLATINUM: '#E9EAEA'
+        PLATINUM: '#E9EAEA',
+        AEROSPACE_ORANGE: '#FF4A0E',
     },
 
     FONT_FAMILY: {
-        REGULAR: 'Roboto_400Regular',
-        BOLD: 'Roboto_700Bold'
+        REGULAR: 'Inter_400Regular',
+        BOLD: 'Inter_700Bold'
     },
 
     FONT_SIZE: {

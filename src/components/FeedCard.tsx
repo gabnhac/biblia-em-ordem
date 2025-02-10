@@ -1,19 +1,45 @@
 import theme from "@theme/index";
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Octicons from '@expo/vector-icons/Octicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Animated, { withTiming } from "react-native-reanimated";
+import { useSharedValue } from 'react-native-reanimated';
 
+import ImgDefault from "@assets/Church.jpg";
+import { useState } from "react";
 
 type Props = {
     location: string,
     title: string,
+    description?: string,
     img?: string,
-
 }
 
-export default function FeedCard() {
+export default function FeedCard({
+    location,
+    title,
+    img,
+    description
+}: Props) {
+    const height = useSharedValue(240);
+    const [isCardOpen, setIsOpenCard] = useState(false);
+
+    function handleOpenCard() {
+        height.value = withTiming(340);
+        setTimeout(() => {
+            setIsOpenCard(true);
+
+        }, 300)
+    }
+
+    function handleCloseCard() {
+        height.value = withTiming(240);
+        setIsOpenCard(false);
+    }
+
     return (
-        <View style={styles.container}>
+        <Animated.View style={[styles.container, { height }]}>
             <View>
                 <View style={styles.functionIconsWrapper}>
                     <TouchableOpacity
@@ -27,40 +53,75 @@ export default function FeedCard() {
                         <Octicons name="pencil" size={30} color={theme.COLORS.PRINCETON_ORANGE} />
                     </TouchableOpacity>
                 </View>
-                <Image
-                    source={require("@assets/church.jpg")}
-                    style={styles.image}
-                />
+                {img ?
+                    <Image
+                        source={{ uri: img }}
+                        style={styles.image}
+                    />
+                    :
+                    <Image
+                        source={ImgDefault}
+                        style={styles.image}
+                    />
+
+                }
             </View>
             <View style={styles.descriptionWrapper}>
                 <View style={styles.titleWrapper}>
-                    <TextInput
-                        style={[styles.text, styles.titleInput]}
-                        value="Ensaio aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                    />
+                    <Text
+                        style={[styles.text, styles.titleText]}
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                    >{title}</Text>
                 </View>
 
                 <View style={styles.locationWrapper}>
-
-
-                    <TextInput
-                        multiline
+                    <Ionicons name="location-sharp" size={18} color={theme.COLORS.AEROSPACE_ORANGE} />
+                    <Text
+                        style={[styles.text, styles.locationText]}
                         numberOfLines={2}
-                        style={[styles.text, styles.locationInput]}
-                        value="Igreja Assembleia de Deus"
-                    />
+                        ellipsizeMode="tail"
+                    >{location}</Text>
                 </View>
             </View>
-        </View>
+            {description &&
+                <View style={styles.expandCardWrapper}>
+                    {isCardOpen ?
+                        <>
+                            <Text
+                                numberOfLines={4}                            
+                                style={[styles.text, styles.descriptionText]}
+                            >
+                                {description}
+                            </Text>
+                            <TouchableOpacity
+                                onPress={handleCloseCard}
+                            >
+                                <MaterialIcons name="expand-less" size={27} color="black"
+                                    style={{ alignSelf: "center" }}
+                                />
+                            </TouchableOpacity>
+                        </>
+                        :
+                        <TouchableOpacity
+                            onPress={handleOpenCard}
+                        >
+                            <MaterialIcons name="expand-more" size={27} color="black"
+                                style={{ alignSelf: "center" }}
+                            />
+                        </TouchableOpacity>
+                    }
+                </View>
+            }
+        </Animated.View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         width: "90%",
-        height: 230,
         borderRadius: 30,
-        backgroundColor: "#fff",
+        backgroundColor: theme.COLORS.FRENCH_GRAY,
         shadowColor: "rgba(50, 50, 93, 0.25)",
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.25,
@@ -75,7 +136,6 @@ const styles = StyleSheet.create({
         width: "100%",
 
         resizeMode: "cover",
-        backgroundColor: "red"
 
     },
     functionIconsWrapper: {
@@ -88,9 +148,7 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     descriptionWrapper: {
-        flex: 1,
         flexDirection: "row",
-        backgroundColor: theme.COLORS.FRENCH_GRAY,
 
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
@@ -107,24 +165,27 @@ const styles = StyleSheet.create({
 
     },
     locationWrapper: {
-        maxWidth: "45%",
+        maxWidth: "50%",
         flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "center",
-        gap: 5,
-    },
-    locationInputWrapper: {
-        flexWrap: "wrap",
     },
     text: {
         fontFamily: theme.FONT_FAMILY.REGULAR,
-        fontSize: 15
+        fontSize: theme.FONT_SIZE.SM
 
     },
-    titleInput: {
+    titleText: {
 
     },
-    locationInput: {
+    locationText: {
 
-    }
+    },
+    descriptionText: {
+        marginBottom: 10,
+        alignSelf: "center",
+        flexWrap: "wrap",
+    },
+    expandCardWrapper: {
+        flex: 1,
+        justifyContent: "flex-end"
+    },
 })

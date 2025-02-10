@@ -13,7 +13,7 @@ export default {
     },
 
     FONT_SIZE: {
-        SM: 14,
+        SM: 15,
         MD: 16,
         LG: 18,
         XL: 24

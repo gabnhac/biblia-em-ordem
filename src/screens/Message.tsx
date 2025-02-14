@@ -1,4 +1,5 @@
 import FeedCard from "@components/FeedCard";
+import MessageCard from "@components/MessageCard";
 import theme from "@theme/index";
 import { useState } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
@@ -6,18 +7,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
-export default function Feed(){
-    const layout = useWindowDimensions();
-    const [index, setIndex] = useState(0);
-
+export default function Message(){
     return(
         <SafeAreaView style={styles.container}>
-            <FeedCard
-                location="Igreja Assembléia de Deus"
-                title="Ensaio de Jovens"
-                description="Hoje teremos ensaio"
-
+            <MessageCard
+                description="Hoje não teremos ensaio"
+                title="Cancelamento do ensaio"
             />
+
         </SafeAreaView>
     )
 }

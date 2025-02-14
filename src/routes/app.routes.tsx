@@ -9,9 +9,10 @@ import { Platform } from "react-native";
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Entypo from '@expo/vector-icons/Entypo';
+import FeedSections from "@screens/FeedSections";
 
 type AppRoutes = {
-    feed: undefined,
+    home: undefined,
     formulario: undefined,
     relatorio: undefined,
     turmas: undefined,
@@ -39,8 +40,8 @@ export function AppRoutes(){
             }}
         >
             <Screen
-                name="feed"
-                component={Feed}
+                name="home"
+                component={FeedSections}
                 options={{
                     tabBarIcon: ({focused}) => {
                         let color = focused ? theme.COLORS.PRINCETON_ORANGE : theme.COLORS.PRUSSIAN_BLUE;
